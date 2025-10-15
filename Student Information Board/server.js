@@ -8,6 +8,11 @@ const mongoose = require('mongoose');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
+
+app.listen(PORT, () => {
+  console.log(`✅ Server running on port ${PORT}`);
+});
+
 const JWT_SECRET = 'your-secret-key-change-in-production';
 
 // Middleware
