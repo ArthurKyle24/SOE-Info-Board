@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Software Engineering - Student Information Board</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Login Page -->
+    <div id="loginPage" class="page active">
+        <div class="login-container">
+            <div class="login-header">
+                <h1><i class="fas fa-graduation-cap"></i> Software Engineering</h1>
+                <h2>Student Information Board</h2>
+            </div>
+            <form id="loginForm" class="login-form">
+                <div class="form-group">
+                    <label for="userType">Login As:</label>
+                    <select id="userType" required>
+                        <option value="">Select User Type</option>
+                        <option value="student">Student</option>
+                        <option value="admin">Admin</option>
+                    </select>
+                </div>
+                <div class="form-group" id="usernameGroup">
+                    <label for="username">Username:</label>
+                    <input type="text" id="username">
+                </div>
+                <div class="form-group" id="passwordGroup">
+                    <label for="password">Password:</label>
+                    <input type="password" id="password">
+                </div>
+                <div class="form-group" id="studentNameGroup" style="display: none;">
+                    <label for="studentName">Name:</label>
+                    <input type="text" id="studentName">
+                </div>
+                <div class="form-group" id="registrationNumberGroup" style="display: none;">
+                    <label for="registrationNumber">Registration Number:</label>
+                    <input type="text" id="registrationNumber">
+                </div>
+                <button type="submit" class="login-btn">Login</button>
+                <button type="button" id="showRegisterFormBtn" class="register-btn">Register</button>
+            </form>
+            <div id="loginError" class="error-message"></div>
+
+            <form id="registerForm" class="register-form" style="display: none;">
+                <h2>Student Registration</h2>
+                <div class="form-group">
+                    <label for="registerUserType">Register As:</label>
+                    <select id="registerUserType" required>
+                        <option value="">Select User Type</option>
+                        <option value="student">Student</option>
+                        <option value="admin">Admin</option>
+                    </select>
+                </div>
+                <div class="form-group" id="registerStudentNameGroup">
+                    <label for="registerStudentName">Name:</label>
+                    <input type="text" id="registerStudentName">
+                </div>
+                <div class="form-group" id="registerRegistrationNumberGroup">
+                    <label for="registerRegistrationNumber">Registration Number:</label>
+                    <input type="text" id="registerRegistrationNumber">
+                </div>
+                <div class="form-group" id="registerUsernameGroup" style="display: none;">
+                    <label for="registerUsername">Username:</label>
+                    <input type="text" id="registerUsername">
+                </div>
+                <div class="form-group" id="registerPasswordGroup" style="display: none;">
+                    <label for="registerPassword">Password:</label>
+                    <input type="password" id="registerPassword">
+                </div>
+                <div class="form-group" id="adminIdTokenGroup" style="display: none;">
+                    <label for="departmentalIdToken">Departmental ID Token:</label>
+                    <input type="password" id="departmentalIdToken">
+                </div>
+                <button type="submit" class="register-btn">Register</button>
+                <button type="button" id="showLoginFormBtn" class="login-btn">Back to Login</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Student Dashboard -->
+    <div id="studentPage" class="page">
+        <header class="header">
+            <div class="header-content">
+                <h1><i class="fas fa-graduation-cap"></i> Software Engineering - Student Portal</h1>
+                <div class="user-info">
+                    <span id="studentName">Student User</span>
+                    <button id="logoutBtn" class="logout-btn">Logout</button>
+                </div>
+            </div>
+        </header>
+
+        <nav class="nav-tabs">
+            <button class="nav-tab active" data-tab="announcements">Announcements</button>
+            <button class="nav-tab" data-tab="events">Events</button>
+            <button class="nav-tab" data-tab="timetable">Timetable</button>
+            <button class="nav-tab" data-tab="results">Results</button>
+        </nav>
+
+        <main class="main-content">
+            <!-- Search and Filter Section -->
+            <div class="search-section">
+                <div class="search-bar">
+                    <input type="text" id="searchInput" placeholder="Search announcements, events...">
+                    <button id="searchBtn"><i class="fas fa-search"></i></button>
+                </div>
+                <div class="filter-section">
+                    <select id="categoryFilter">
+                        <option value="">All Categories</option>
+                        <option value="academic">Academic</option>
+                        <option value="events">Events</option>
+                        <option value="general">General</option>
+                        <option value="exams">Exams</option>
+                    </select>
+                    <select id="dateFilter">
+                        <option value="">All Dates</option>
+                        <option value="today">Today</option>
+                        <option value="week">This Week</option>
+                        <option value="month">This Month</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Announcements Tab -->
+            <div id="announcements" class="tab-content active">
+                <h2>Departmental Announcements</h2>
+                <div id="announcementsList" class="content-list">
+                    <!-- Announcements will be loaded here -->
+                </div>
+            </div>
+
+            <!-- Events Tab -->
+            <div id="events" class="tab-content">
+                <h2>Upcoming Events</h2>
+                <div id="eventsList" class="content-list">
+                    <!-- Events will be loaded here -->
+                </div>
+            </div>
+
+            <!-- Timetable Tab -->
+            <div id="timetable" class="tab-content">
+                <h2>Class Timetable</h2>
+                <div id="timetableList" class="content-list">
+                    <!-- Timetable will be loaded here -->
+                </div>
+            </div>
+
+            <!-- Results Tab -->
+            <div id="results" class="tab-content">
+                <h2>Examination Results</h2>
+                <div id="resultsList" class="content-list">
+                    <!-- Results will be loaded here -->
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Admin Dashboard -->
+    <div id="adminPage" class="page">
+        <header class="header">
+            <div class="header-content">
+                <h1><i class="fas fa-graduation-cap"></i> Software Engineering - Admin Portal</h1>
+                <div class="user-info">
+                    <span>Admin: Arthurkyle24</span>
+                    <button id="adminLogoutBtn" class="logout-btn">Logout</button>
+                </div>
+            </div>
+        </header>
+
+        <nav class="nav-tabs">
+            <button class="nav-tab active" data-tab="admin-announcements">Manage Announcements</button>
+            <button class="nav-tab" data-tab="admin-events">Manage Events</button>
+            <button class="nav-tab" data-tab="admin-timetable">Manage Timetable</button>
+            <button class="nav-tab" data-tab="admin-results">Manage Results</button>
+            <button class="nav-tab" data-tab="admin-archive">Archive</button>
+        </nav>
+
+        <main class="main-content">
+            <!-- Admin Announcements Tab -->
+            <div id="admin-announcements" class="tab-content active">
+                <div class="admin-header">
+                    <h2>Manage Announcements</h2>
+                    <button id="addAnnouncementBtn" class="add-btn">+ Add New Announcement</button>
+                </div>
+                <div id="adminAnnouncementsList" class="content-list">
+                    <!-- Admin announcements management will be loaded here -->
+                </div>
+            </div>
+
+            <!-- Admin Events Tab -->
+            <div id="admin-events" class="tab-content">
+                <div class="admin-header">
+                    <h2>Manage Events</h2>
+                    <button id="addEventBtn" class="add-btn">+ Add New Event</button>
+                </div>
+                <div id="adminEventsList" class="content-list">
+                    <!-- Admin events management will be loaded here -->
+                </div>
+            </div>
+
+            <!-- Admin Timetable Tab -->
+            <div id="admin-timetable" class="tab-content">
+                <div class="admin-header">
+                    <h2>Manage Timetable</h2>
+                    <button id="addTimetableBtn" class="add-btn">+ Add New Schedule</button>
+                </div>
+                <div id="adminTimetableList" class="content-list">
+                    <!-- Admin timetable management will be loaded here -->
+                </div>
+            </div>
+
+            <!-- Admin Results Tab -->
+            <div id="admin-results" class="tab-content">
+                <div class="admin-header">
+                    <h2>Manage Results</h2>
+                    <button id="addResultBtn" class="add-btn">+ Add New Result</button>
+                </div>
+                <div id="adminResultsList" class="content-list">
+                    <!-- Admin results management will be loaded here -->
+                </div>
+            </div>
+
+            <!-- Admin Archive Tab -->
+            <div id="admin-archive" class="tab-content">
+                <h2>Archive</h2>
+                <div class="archive-filters">
+                    <select id="archiveType">
+                        <option value="all">All Items</option>
+                        <option value="announcements">Announcements</option>
+                        <option value="events">Events</option>
+                        <option value="timetable">Timetable</option>
+                        <option value="results">Results</option>
+                    </select>
+                    <input type="date" id="archiveDateFrom" placeholder="From Date">
+                    <input type="date" id="archiveDateTo" placeholder="To Date">
+                    <button id="filterArchiveBtn">Filter</button>
+                </div>
+                <div id="archiveList" class="content-list">
+                    <!-- Archive items will be loaded here -->
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Modal for Adding/Editing Content -->
+    <div id="contentModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modalTitle">Add New Content</h3>
+                <span class="close">&times;</span>
+            </div>
+            <form id="contentForm" class="modal-form">
+                <input type="hidden" id="contentId">
+                <input type="hidden" id="contentType">
+                
+                <div class="form-group">
+                    <label for="contentTitle">Title:</label>
+                    <input type="text" id="contentTitle" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="contentDescription">Description:</label>
+                    <textarea id="contentDescription" rows="4" required></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="contentCategory">Category:</label>
+                    <select id="contentCategory" required>
+                        <option value="academic">Academic</option>
+                        <option value="events">Events</option>
+                        <option value="general">General</option>
+                        <option value="exams">Exams</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="contentDate">Date:</label>
+                    <input type="date" id="contentDate" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="contentTime">Time (for events):</label>
+                    <input type="time" id="contentTime">
+                </div>
+                
+                <div class="form-group">
+                    <label for="contentLocation">Location (for events):</label>
+                    <input type="text" id="contentLocation">
+                </div>
+                
+                <div class="form-group">
+                    <label for="contentPriority">Priority:</label>
+                    <select id="contentPriority">
+                        <option value="normal">Normal</option>
+                        <option value="high">High</option>
+                        <option value="urgent">Urgent</option>
+                    </select>
+                </div>
+                
+                <div class="modal-actions">
+                    <button type="button" id="cancelBtn" class="btn-secondary">Cancel</button>
+                    <button type="submit" class="btn-primary">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="script.js?v=5"></script>
+</body>
+</html>
