@@ -3,6 +3,8 @@ let currentUser = null;
 let currentTab = 'announcements';
 let authToken = null;
 
+const BACKEND_URL = 'https://soe-info-board-api.onrender.com';
+
 // Initialize the application
 document.addEventListener('DOMContentLoaded', function() {
     initializeApp();
@@ -147,7 +149,7 @@ async function handleLogin(e) {
     document.getElementById('loginError').textContent = '';
     
     try {
-        const response = await fetch('/api/login', {
+        const response = await fetch(`${BACKEND_URL}/api/login`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -201,7 +203,7 @@ async function verifyToken() {
     
     try {
         console.log('Making API call to verify token...'); // Debug log
-        const response = await fetch('/api/announcements', {
+        const response = await fetch(`${BACKEND_URL}/api/announcements`, {
             headers: {
                 'Authorization': `Bearer ${authToken}`
             }
@@ -309,7 +311,7 @@ async function loadContent(containerId, apiType) {
     }
     
     try {
-        const response = await fetch(`/api/${apiType}`, {
+        const response = await fetch(`${BACKEND_URL}/api/${apiType}`, {
             headers: {
                 'Authorization': `Bearer ${authToken}`
             }
@@ -362,7 +364,7 @@ async function loadAdminContentList(containerId, apiType) {
     }
     
     try {
-        const response = await fetch(`/api/${apiType}`, {
+        const response = await fetch(`${BACKEND_URL}/api/${apiType}`, {
             headers: {
                 'Authorization': `Bearer ${authToken}`
             }
@@ -493,7 +495,7 @@ async function performSearch() {
         }
         console.log('Search request URL:', `/api/search?type=${searchType}&${params.toString()}`);
         console.log('Search request headers:', { 'Authorization': `Bearer ${authToken}` });
-        const response = await fetch(`/api/search?type=${searchType}&${params.toString()}`, {
+        const response = await fetch(`${BACKEND_URL}/api/search?type=${searchType}&${params.toString()}`, {
             headers: {
                 'Authorization': `Bearer ${authToken}`
             }
@@ -638,7 +640,7 @@ async function editItem(id, type) {
     }
     
     try {
-        const response = await fetch(`/api/${type}/${id}`, {
+        const response = await fetch(`${BACKEND_URL}/api/${type}/${id}`, {
             headers: {
                 'Authorization': `Bearer ${authToken}`
             }
@@ -683,7 +685,7 @@ async function archiveItem(id, type) {
     
     if (confirm('Are you sure you want to archive this item?')) {
         try {
-            const response = await fetch(`/api/${type}/${id}/archive`, {
+            const response = await fetch(`${BACKEND_URL}/api/${type}/${id}/archive`, {
                 method: 'POST',
                 headers: {
                     'Authorization': `Bearer ${authToken}`
@@ -713,7 +715,7 @@ async function deleteItem(id, type) {
     
     if (confirm('Are you sure you want to delete this item? This action cannot be undone.')) {
         try {
-            const response = await fetch(`/api/${type}/${id}`, {
+            const response = await fetch(`${BACKEND_URL}/api/${type}/${id}`, {
                 method: 'DELETE',
                 headers: {
                     'Authorization': `Bearer ${authToken}`
@@ -744,7 +746,7 @@ async function loadArchive() {
     }
     
     try {
-        const response = await fetch('/api/archive', {
+        const response = await fetch(`${BACKEND_URL}/api/archive`, {
             headers: {
                 'Authorization': `Bearer ${authToken}`
             }
@@ -803,7 +805,7 @@ async function filterArchive() {
     if (dateTo) params.append('dateTo', dateTo);
     
     try {
-        const response = await fetch(`/api/archive?${params.toString()}`, {
+        const response = await fetch(`${BACKEND_URL}/api/archive?${params.toString()}`, {
             headers: {
                 'Authorization': `Bearer ${authToken}`
             }
@@ -886,7 +888,7 @@ async function handleRegister(event) {
     const loginError = document.getElementById('loginError');
 
     let payload = {};
-    let url = '/api/register';
+    let url = `${BACKEND_URL}/api/register`;
 
     if (registerUserType === 'student') {
         const registerStudentName = document.getElementById('registerStudentName').value;
