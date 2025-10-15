@@ -39,3 +39,6 @@ mongoose.connect(MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true 
     .catch(err => console.error('MongoDB connection error:', err));
 
 // ... (rest of your code, unchanged) ...
+mongoose.connect(MONGODB_URI)
+  .then(() => console.log('MongoDB connected'))
+  .catch(err => console.error('MongoDB connection error:', err));
