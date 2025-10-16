@@ -170,6 +170,36 @@ app.delete('/api/:type/:id', verifyToken, async (req, res) => {
     }
 });
 
+// Get all announcements
+app.get('/api/announcements', verifyToken, async (req, res) => {
+    try {
+        const announcements = await Announcement.find();
+        res.status(200).json(announcements);
+    } catch (error) {
+        res.status(500).json({ message: 'Server error' });
+    }
+});
+
+// Get all events
+app.get('/api/events', verifyToken, async (req, res) => {
+    try {
+        const events = await Event.find();
+        res.status(200).json(events);
+    } catch (error) {
+        res.status(500).json({ message: 'Server error' });
+    }
+});
+
+// Get all timetable entries
+app.get('/api/timetable', verifyToken, async (req, res) => {
+    try {
+        const timetable = await Timetable.find();
+        res.status(200).json(timetable);
+    } catch (error) {
+        res.status(500).json({ message: 'Server error' });
+    }
+});
+
 // Student Model
 const StudentSchema = new mongoose.Schema({
     name: { type: String, required: true },

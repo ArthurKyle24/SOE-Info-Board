@@ -317,7 +317,7 @@ async function loadContent(containerId, apiType) {
     }
     
     try {
-        const response = await fetch(`${BACKEND_URL}/api/archive`, {
+        const response = await fetch(`${BACKEND_URL}/api/${apiType}`, {
             headers: {
                 'Authorization': `Bearer ${authToken}`
             }
