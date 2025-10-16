@@ -1,6 +1,5 @@
 const BACKEND_URL = "https://soe-info-board-api.onrender.com"; 
 
-
 // Global Variables
 let currentUser = null;
 let currentTab = 'announcements';
