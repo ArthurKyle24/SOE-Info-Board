@@ -139,8 +139,8 @@ async function handleLogin(e) {
     let credentials = {};
 
     if (userType === 'student') {
-        credentials.name = document.getElementById('studentName').value;
-        credentials.regNo = document.getElementById('registrationNumber').value;
+        credentials.username = document.getElementById('studentName').value;
+        credentials.password = document.getElementById('registrationNumber').value;
     } else if (userType === 'admin') {
         credentials.username = document.getElementById('username').value;
         credentials.password = document.getElementById('password').value;
@@ -899,8 +899,8 @@ async function handleRegister(event) {
             return;
         }
         payload = {
-            name: registerStudentName,
-            regNo: registerRegistrationNumber,
+            username: registerStudentName,
+            password: registerRegistrationNumber,
             userType: 'student'
         };
     } else if (registerUserType === 'admin') {
