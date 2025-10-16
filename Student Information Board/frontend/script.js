@@ -158,7 +158,13 @@ async function handleLogin(e) {
              body: JSON.stringify({ ...credentials, userType })
          }).catch(err => console.error(err));
         
-        const data = await response.json();
+        let data;
+        try {
+            data = await response.json();
+        } catch {
+            const text = await response.text();
+            throw new Error(text);
+        }
         
         if (response.ok) {
             authToken = data.token;
@@ -931,7 +937,13 @@ async function handleRegister(event) {
             body: JSON.stringify(payload)
         }).catch(err => console.error(err));
 
-        const data = await response.json();
+        let data;
+        try {
+            data = await response.json();
+        } catch {
+            const text = await response.text();
+            throw new Error(text);
+        }
 
         if (response.ok) {
             alert(data.message);
