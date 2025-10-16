@@ -1,3 +1,6 @@
+const BACKEND_URL = "https://soe-info-board-api.onrender.com"; 
+
+
 // Global Variables
 let currentUser = null;
 let currentTab = 'announcements';
@@ -148,12 +151,12 @@ async function handleLogin(e) {
     
     try {
         const response = await fetch(`${BACKEND_URL}/api/login`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ ...credentials, userType })
-        });
+             method: 'POST',
+             headers: {
+                 'Content-Type': 'application/json',
+             },
+             body: JSON.stringify({ ...credentials, userType })
+         }).catch(err => console.error(err));
         
         const data = await response.json();
         
@@ -202,10 +205,10 @@ async function verifyToken() {
     try {
         console.log('Making API call to verify token...'); // Debug log
         const response = await fetch(`${BACKEND_URL}/api/announcements`, {
-            headers: {
-                'Authorization': `Bearer ${authToken}`
-            }
-        });
+             headers: {
+                 'Authorization': `Bearer ${authToken}`
+             }
+         }).catch(err => console.error(err));
         
         if (response.ok) {
             const userData = localStorage.getItem('currentUser');
@@ -309,11 +312,11 @@ async function loadContent(containerId, apiType) {
     }
     
     try {
-        const response = await fetch(`/api/${apiType}`, {
+        const response = await fetch(`${BACKEND_URL}/api/archive`, {
             headers: {
                 'Authorization': `Bearer ${authToken}`
             }
-        });
+        }).catch(err => console.error(err));
         
         if (response.ok) {
             const data = await response.json();
@@ -362,11 +365,11 @@ async function loadAdminContentList(containerId, apiType) {
     }
     
     try {
-        const response = await fetch(`/api/${apiType}`, {
+        const response = await fetch(`${BACKEND_URL}/api/${apiType}`, {
             headers: {
                 'Authorization': `Bearer ${authToken}`
             }
-        });
+        }).catch(err => console.error(err));
         
         if (response.ok) {
             const data = await response.json();
@@ -493,11 +496,11 @@ async function performSearch() {
         }
         console.log('Search request URL:', `/api/search?type=${searchType}&${params.toString()}`);
         console.log('Search request headers:', { 'Authorization': `Bearer ${authToken}` });
-        const response = await fetch(`/api/search?type=${searchType}&${params.toString()}`, {
+        const response = await fetch(`${BACKEND_URL}/api/search?type=${searchType}&${params.toString()}`, {
             headers: {
                 'Authorization': `Bearer ${authToken}`
             }
-        });
+        }).catch(err => console.error(err));
         
         if (response.ok) {
             const data = await response.json();
@@ -596,24 +599,24 @@ async function handleContentSubmit(e) {
         let response;
         if (contentId) {
             // Edit existing item
-            response = await fetch(`/api/${contentType}/${contentId}`, {
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${authToken}`
-                },
-                body: JSON.stringify(itemData)
-            });
+            response = await fetch(`${BACKEND_URL}/api/${contentType}/${contentId}`, {
+                 method: 'PUT',
+                 headers: {
+                     'Content-Type': 'application/json',
+                     'Authorization': `Bearer ${authToken}`
+                 },
+                 body: JSON.stringify(itemData)
+             }).catch(err => console.error(err));
         } else {
             // Add new item
-            response = await fetch(`/api/${contentType}`, {
+            response = await fetch(`${BACKEND_URL}/api/${contentType}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${authToken}`
                 },
                 body: JSON.stringify(itemData)
-            });
+            }).catch(err => console.error(err));
         }
         
         if (response.ok) {
@@ -638,11 +641,11 @@ async function editItem(id, type) {
     }
     
     try {
-        const response = await fetch(`/api/${type}/${id}`, {
+        const response = await fetch(`${BACKEND_URL}/api/${type}/${id}`, {
             headers: {
                 'Authorization': `Bearer ${authToken}`
             }
-        });
+        }).catch(err => console.error(err));
         
         if (response.ok) {
             const item = await response.json();
@@ -683,12 +686,12 @@ async function archiveItem(id, type) {
     
     if (confirm('Are you sure you want to archive this item?')) {
         try {
-            const response = await fetch(`/api/${type}/${id}/archive`, {
-                method: 'POST',
-                headers: {
-                    'Authorization': `Bearer ${authToken}`
-                }
-            });
+            const response = await fetch(`${BACKEND_URL}/api/${type}/${id}/archive`, {
+            method: 'POST',
+            headers: {
+                'Authorization': `Bearer ${authToken}`
+            }
+        }).catch(err => console.error(err));
             
             if (response.ok) {
                 await loadAdminContent();
@@ -713,12 +716,12 @@ async function deleteItem(id, type) {
     
     if (confirm('Are you sure you want to delete this item? This action cannot be undone.')) {
         try {
-            const response = await fetch(`/api/${type}/${id}`, {
-                method: 'DELETE',
-                headers: {
-                    'Authorization': `Bearer ${authToken}`
-                }
-            });
+            const response = await fetch(`${BACKEND_URL}/api/${type}/${id}`, {
+            method: 'DELETE',
+            headers: {
+                'Authorization': `Bearer ${authToken}`
+            }
+        }).catch(err => console.error(err));
             
             if (response.ok) {
                 await loadAdminContent();
@@ -744,11 +747,11 @@ async function loadArchive() {
     }
     
     try {
-        const response = await fetch(`${BACKEND_URL}/api/archive`, {
+        const response = await fetch(`${BACKEND_URL}/api/${apiType}`, {
             headers: {
                 'Authorization': `Bearer ${authToken}`
             }
-        });
+        }).catch(err => console.error(err));
         
         if (response.ok) {
             const data = await response.json();
@@ -803,11 +806,11 @@ async function filterArchive() {
     if (dateTo) params.append('dateTo', dateTo);
     
     try {
-        const response = await fetch(`/api/archive?${params.toString()}`, {
+        const response = await fetch(`${BACKEND_URL}/api/archive?${params.toString()}`, {
             headers: {
                 'Authorization': `Bearer ${authToken}`
             }
-        });
+        }).catch(err => console.error(err));
         
         if (response.ok) {
             const data = await response.json();
@@ -926,7 +929,7 @@ async function handleRegister(event) {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(payload)
-        });
+        }).catch(err => console.error(err));
 
         const data = await response.json();
 
