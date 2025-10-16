@@ -17,9 +17,12 @@ const JWT_SECRET = 'your-secret-key-change-in-production';
 
 // Middleware
 app.use(cors());
-app.use(bodyParser.json());
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static('.'));
+app.use(express.json());
+
 
 // ... (rest of your code, unchanged) ...
 

@@ -180,7 +180,7 @@ async function handleLogin(e) {
                 loadStudentContent();
             }
         } else {
-            document.getElementById('loginError').textContent = data.error || 'Login failed';
+            document.getElementById('loginError').textContent = data.message || 'Login failed';
         }
     } catch (error) {
         console.error('Login error:', error);
@@ -895,7 +895,7 @@ async function handleRegister(event) {
     const loginError = document.getElementById('loginError');
 
     let payload = {};
-    let url = '/api/register';
+    let url = `${BACKEND_URL}/api/register`;
 
     if (registerUserType === 'student') {
         const registerStudentName = document.getElementById('registerStudentName').value;
@@ -957,7 +957,7 @@ async function handleRegister(event) {
             document.getElementById('departmentalIdToken').value = '';
             toggleRegisterFields(); // Reset field visibility
         } else {
-            loginError.textContent = data.error || 'Registration failed.';
+            loginError.textContent = data.message || 'Registration failed.';
         }
     } catch (error) {
         console.error('Registration error:', error);
