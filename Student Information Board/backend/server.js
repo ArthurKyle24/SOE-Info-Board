@@ -59,6 +59,7 @@ mongoose.connect(MONGODB_URI)
 const UserSchema = new mongoose.Schema({
     username: { type: String, required: true, unique: true },
     password: { type: String, required: true },
+    userType: { type: String, required: true },
 });
 
 const User = mongoose.model('User', UserSchema);
@@ -83,9 +84,9 @@ const verifyToken = (req, res, next) => {
 // Register Route
 app.post('/api/register', async (req, res) => {
     try {
-        const { username, password } = req.body;
+        const { username, password, userType } = req.body;
         const hashedPassword = await bcrypt.hash(password, 10);
-        const user = new User({ username, password: hashedPassword });
+        const user = new User({ username, password: hashedPassword, userType });
         await user.save();
         res.status(201).json({ message: 'User registered successfully' });
     } catch (error) {
