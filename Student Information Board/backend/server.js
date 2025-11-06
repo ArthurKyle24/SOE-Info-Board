@@ -844,6 +844,86 @@ async function initializeDatabase() {
           date: new Date('2025-11-15'),
           author: 'Admin',
           priority: 'high'
+        },
+        {
+          title: 'Software Design Patterns Workshop Series',
+          description: 'Join us for a comprehensive workshop series on Software Design Patterns. Sessions will cover Creational, Structural, and Behavioral patterns with practical examples.',
+          category: 'academic',
+          date: new Date('2025-11-08'),
+          author: 'Dr. Anderson',
+          priority: 'normal'
+        },
+        {
+          title: 'Research Paper Submission Deadline',
+          description: 'Final deadline for submitting research papers for the International Conference on Software Engineering (ICSE 2026) is December 15, 2025.',
+          category: 'academic',
+          date: new Date('2025-12-15'),
+          author: 'Prof. Williams',
+          priority: 'high'
+        },
+        {
+          title: 'Industry Talk Series: AI in Software Testing',
+          description: 'Guest lecture by Microsoft\'s Lead QA Engineer on implementing AI-driven testing methodologies. All students are encouraged to attend.',
+          category: 'events',
+          date: new Date('2025-11-22'),
+          author: 'Admin',
+          priority: 'normal'
+        },
+        {
+          title: 'Holiday Schedule Announcement',
+          description: 'Winter break will commence from December 20, 2025. Classes will resume on January 5, 2026. Happy holidays!',
+          category: 'general',
+          date: new Date('2025-12-01'),
+          author: 'Admin',
+          priority: 'normal'
+        },
+        {
+          title: 'Software Project Showcase',
+          description: 'Annual software project showcase event. Students will present their innovative solutions to industry professionals.',
+          category: 'events',
+          date: new Date('2025-12-10'),
+          author: 'Prof. Martinez',
+          priority: 'high'
+        },
+        {
+          title: 'Library System Maintenance',
+          description: 'The digital library system will be under maintenance from 10 PM to 2 AM tonight. Please plan accordingly.',
+          category: 'general',
+          date: new Date('2025-11-07'),
+          author: 'System Admin',
+          priority: 'normal'
+        },
+        {
+          title: 'Programming Competition Registration Open',
+          description: 'Register now for the annual programming competition. Great prizes to be won! Registration closes on November 30.',
+          category: 'events',
+          date: new Date('2025-11-10'),
+          author: 'Competition Committee',
+          priority: 'normal'
+        },
+        {
+          title: 'New Course Offering: Blockchain Development',
+          description: 'New elective course on Blockchain Development will be offered next semester. Pre-registration starts December 1.',
+          category: 'academic',
+          date: new Date('2025-12-01'),
+          author: 'Dr. Kumar',
+          priority: 'normal'
+        },
+        {
+          title: 'Emergency Network Maintenance',
+          description: 'Campus network will undergo emergency maintenance on Sunday from 2 AM to 6 AM. Some services may be unavailable.',
+          category: 'general',
+          date: new Date('2025-11-09'),
+          author: 'IT Department',
+          priority: 'urgent'
+        },
+        {
+          title: 'Final Year Project Guidelines Update',
+          description: 'Updated guidelines for final year projects have been published. Please review the new requirements carefully.',
+          category: 'academic',
+          date: new Date('2025-11-11'),
+          author: 'Project Committee',
+          priority: 'high'
         }
       ]);
       console.log('Seeded announcements');
@@ -870,6 +950,106 @@ async function initializeDatabase() {
           location: 'Main Auditorium',
           author: 'Admin',
           priority: 'normal'
+        },
+        {
+          title: 'Career Fair 2025',
+          description: 'Annual career fair with top tech companies. Bring your resumes and be ready for on-spot interviews.',
+          category: 'events',
+          date: new Date('2025-11-25'),
+          time: '09:00',
+          location: 'University Convention Center',
+          author: 'Career Services',
+          priority: 'high'
+        },
+        {
+          title: 'Hackathon: Code for Good',
+          description: 'A 24-hour hackathon focused on developing solutions for social good. Teams of 2-4 members.',
+          category: 'events',
+          date: new Date('2025-12-05'),
+          time: '08:00',
+          location: 'Innovation Hub',
+          author: 'Tech Club',
+          priority: 'normal'
+        },
+        {
+          title: 'Database Systems Workshop',
+          description: 'Hands-on workshop on advanced database concepts including NoSQL and distributed databases.',
+          category: 'academic',
+          date: new Date('2025-11-18'),
+          time: '13:00',
+          location: 'Lab 204',
+          author: 'Dr. Thompson',
+          priority: 'normal'
+        },
+        {
+          title: 'Alumni Networking Night',
+          description: 'Connect with successful alumni from various tech companies. Great opportunity for mentorship and career guidance.',
+          category: 'events',
+          date: new Date('2025-11-30'),
+          time: '18:00',
+          location: 'Faculty Lounge',
+          author: 'Alumni Association',
+          priority: 'normal'
+        },
+        {
+          title: 'Research Symposium',
+          description: 'Annual research symposium where graduate students present their ongoing research work.',
+          category: 'academic',
+          date: new Date('2025-12-08'),
+          time: '10:00',
+          location: 'Research Center Auditorium',
+          author: 'Research Committee',
+          priority: 'high'
+        },
+        {
+          title: 'Mobile App Development Contest',
+          description: 'Showcase your mobile app development skills. Winners get internship opportunities!',
+          category: 'events',
+          date: new Date('2025-12-15'),
+          time: '14:00',
+          location: 'Innovation Lab',
+          author: 'Mobile Dev Club',
+          priority: 'normal'
+        },
+        {
+          title: 'Cloud Computing Seminar',
+          description: 'AWS certified trainer will conduct a seminar on cloud architecture and deployment.',
+          category: 'academic',
+          date: new Date('2025-11-28'),
+          time: '11:00',
+          location: 'Room 405',
+          author: 'Prof. Clark',
+          priority: 'normal'
+        },
+        {
+          title: 'Open Source Project Sprint',
+          description: 'Join us for a day of contributing to open source projects. Mentors will be available.',
+          category: 'events',
+          date: new Date('2025-12-01'),
+          time: '09:00',
+          location: 'Computer Lab 3',
+          author: 'Open Source Club',
+          priority: 'normal'
+        },
+        {
+          title: 'Software Testing Workshop',
+          description: 'Learn about automated testing frameworks and best practices in software testing.',
+          category: 'academic',
+          date: new Date('2025-12-03'),
+          time: '15:00',
+          location: 'Room 302',
+          author: 'QA Department',
+          priority: 'normal'
+        },
+        {
+          title: 'End of Semester Social',
+          description: 'Join us for games, food, and fun as we celebrate the end of the semester!',
+          category: 'events',
+          date: new Date('2025-12-18'),
+          time: '17:00',
+          location: 'Student Center',
+          author: 'Student Council',
+          priority: 'normal'
         }
       ]);
       console.log('Seeded events');
@@ -884,9 +1064,9 @@ async function initializeDatabase() {
           date: new Date('2025-11-07'),
           time: '09:00-10:30',
           location: 'Room 201',
-          author: 'Prof. Smith',
+          author: 'Dr. Caesar',
           semester: 'Fall 2025',
-          course: 'SE101',
+          course: 'SOE 401',
           priority: 'normal'
         },
         {
@@ -896,9 +1076,129 @@ async function initializeDatabase() {
           date: new Date('2025-11-07'),
           time: '11:00-12:30',
           location: 'Room 202',
-          author: 'Dr. Johnson',
+          author: 'Engr. Erike',
           semester: 'Fall 2025',
-          course: 'SE102',
+          course: 'SOE 403',
+          priority: 'normal'
+        },
+        {
+          title: 'Object-Oriented Programming',
+          description: 'Advanced OOP concepts and design patterns',
+          category: 'academic',
+          date: new Date('2025-11-08'),
+          time: '09:00-10:30',
+          location: 'Room 301',
+          author: 'Dr. Aguwa',
+          semester: 'Fall 2025',
+          course: 'SOE 405',
+          priority: 'normal'
+        },
+        {
+          title: 'Web Development',
+          description: 'Modern web development frameworks and practices',
+          category: 'academic',
+          date: new Date('2025-11-08'),
+          time: '11:00-12:30',
+          location: 'Lab 101',
+          author: 'Engr. Dr. E.C. Amadi',
+          semester: 'Fall 2025',
+          course: 'SOE 407',
+          priority: 'normal'
+        },
+        {
+          title: 'Software Testing',
+          description: 'Software testing methodologies and tools',
+          category: 'academic',
+          date: new Date('2025-11-09'),
+          time: '09:00-10:30',
+          location: 'Room 205',
+          author: 'Mrs. Elei',
+          semester: 'Fall 2025',
+          course: 'SOE 409',
+          priority: 'normal'
+        },
+        {
+          title: 'Mobile App Development',
+          description: 'Cross-platform mobile application development',
+          category: 'academic',
+          date: new Date('2025-11-09'),
+          time: '11:00-12:30',
+          location: 'Lab 202',
+          author: 'Rev. Ovwonuri',
+          semester: 'Fall 2025',
+          course: 'SOE 411',
+          priority: 'normal'
+        },
+        {
+          title: 'Cloud Computing',
+          description: 'Cloud architecture and deployment strategies',
+          category: 'academic',
+          date: new Date('2025-11-10'),
+          time: '09:00-10:30',
+          location: 'Room 304',
+          author: 'Mr. R.E. Ogu',
+          semester: 'Fall 2025',
+          course: 'SOE 413',
+          priority: 'normal'
+        },
+        {
+          title: 'Software Project Management',
+          description: 'Project management methodologies and team leadership',
+          category: 'academic',
+          date: new Date('2025-11-10'),
+          time: '11:00-12:30',
+          location: 'Room 305',
+          author: 'Dr. Caesar',
+          semester: 'Fall 2025',
+          course: 'SOE 415',
+          priority: 'normal'
+        },
+        {
+          title: 'Artificial Intelligence',
+          description: 'Introduction to AI and machine learning',
+          category: 'academic',
+          date: new Date('2025-11-11'),
+          time: '09:00-10:30',
+          location: 'Lab 301',
+          author: 'Engr. Erike',
+          semester: 'Fall 2025',
+          course: 'SOE 417',
+          priority: 'normal'
+        },
+        {
+          title: 'Software Architecture',
+          description: 'Advanced software architecture patterns',
+          category: 'academic',
+          date: new Date('2025-11-11'),
+          time: '11:00-12:30',
+          location: 'Room 401',
+          author: 'Dr. Aguwa',
+          semester: 'Fall 2025',
+          course: 'SOE 411',
+          priority: 'normal'
+        },
+        {
+          title: 'Cybersecurity',
+          description: 'Software security principles and practices',
+          category: 'academic',
+          date: new Date('2025-11-12'),
+          time: '09:00-10:30',
+          location: 'Lab 401',
+          author: 'Engr. Dr. E.C. Amadi',
+          semester: 'Fall 2025',
+          course: 'SOE 401',
+          priority: 'normal'
+        },
+        {
+          title: 'DevOps Practices',
+          description: 'Modern DevOps tools and methodologies',
+          category: 'academic',
+          date: new Date('2025-11-12'),
+          time: '11:00-12:30',
+          location: 'Room 402',
+          author: 'Mrs. Elei',
+          semester: 'Fall 2025',
+          course: 'SOE 403',
           priority: 'normal'
         }
       ]);
