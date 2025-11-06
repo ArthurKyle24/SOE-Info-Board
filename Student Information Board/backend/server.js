@@ -553,6 +553,40 @@ const Timetable = sequelize.define('Timetable', {
   },
 });
 
+// Results Model
+const Result = sequelize.define('Result', {
+  title: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  description: {
+    type: DataTypes.TEXT,
+    allowNull: false,
+  },
+  category: {
+    type: DataTypes.STRING,
+    allowNull: false,
+    defaultValue: 'exams'
+  },
+  date: {
+    type: DataTypes.DATEONLY,
+    allowNull: false,
+  },
+  priority: {
+    type: DataTypes.STRING,
+    defaultValue: 'normal',
+  },
+  author: {
+    type: DataTypes.STRING,
+    allowNull: false,
+    defaultValue: 'Admin'
+  },
+  fileLink: {
+    type: DataTypes.STRING,
+    allowNull: true
+  }
+});
+
 // Announcement Routes
 app.get('/api/announcements', verifyToken, async (req, res) => {
   try {
@@ -615,6 +649,60 @@ app.delete('/api/announcements/:id', verifyToken, async (req, res) => {
   } catch (error) {
     console.error('Error deleting announcement:', error);
     res.status(500).json({ message: 'Error deleting announcement', error: error.message });
+  }
+});
+
+// Results Routes
+app.get('/api/results', verifyToken, async (req, res) => {
+  try {
+    const results = await Result.findAll({ order: [['date', 'DESC']] });
+    res.json(results);
+  } catch (error) {
+    console.error('Error fetching results:', error);
+    res.status(500).json({ message: 'Error fetching results', error: error.message });
+  }
+});
+
+app.post('/api/results', verifyToken, async (req, res) => {
+  try {
+    const { title, description, category, date, priority, fileLink } = req.body;
+    const author = req.user?.username || 'Admin';
+    const newResult = await Result.create({ title, description, category, date, priority, author, fileLink });
+    res.status(201).json(newResult);
+  } catch (error) {
+    console.error('Error creating result:', error);
+    res.status(500).json({ message: 'Error creating result', error: error.message });
+  }
+});
+
+app.put('/api/results/:id', verifyToken, async (req, res) => {
+  try {
+    const { id } = req.params;
+    const [updated] = await Result.update(req.body, { where: { id } });
+    if (updated) {
+      const updatedResult = await Result.findByPk(id);
+      res.json(updatedResult);
+    } else {
+      res.status(404).json({ message: 'Result not found' });
+    }
+  } catch (error) {
+    console.error('Error updating result:', error);
+    res.status(500).json({ message: 'Error updating result', error: error.message });
+  }
+});
+
+app.delete('/api/results/:id', verifyToken, async (req, res) => {
+  try {
+    const { id } = req.params;
+    const deleted = await Result.destroy({ where: { id } });
+    if (deleted) {
+      res.status(204).json({ message: 'Result deleted' });
+    } else {
+      res.status(404).json({ message: 'Result not found' });
+    }
+  } catch (error) {
+    console.error('Error deleting result:', error);
+    res.status(500).json({ message: 'Error deleting result', error: error.message });
   }
 });
 
@@ -727,14 +815,16 @@ app.get('/api/search', verifyToken, async (req, res) => {
 // Proper database initialization (run after models are defined)
 async function initializeDatabase() {
   try {
-    console.log('Initializing database (sync + seed)...');
-    await sequelize.sync({ force: false });
+  console.log('Initializing database (sync + seed)...');
+  // Use alter:true to update schema without dropping data so registrations persist
+  await sequelize.sync({ alter: true });
 
     // Seed data if tables are empty
-    const [annCount, evCount, ttCount] = await Promise.all([
+    const [annCount, evCount, ttCount, resCount] = await Promise.all([
       Announcement.count(),
       Event.count(),
-      Timetable.count()
+      Timetable.count(),
+      Result.count()
     ]);
 
     if (annCount === 0) {
@@ -813,6 +903,21 @@ async function initializeDatabase() {
         }
       ]);
       console.log('Seeded timetables');
+    }
+    
+    if (resCount === 0) {
+      await Result.bulkCreate([
+        {
+          title: 'Final Exam Results - Semester 1',
+          description: 'Final exam results for Semester 1 are now available. Check the attached file for details.',
+          category: 'exams',
+          date: new Date('2025-11-25'),
+          priority: 'normal',
+          author: 'Admin',
+          fileLink: null
+        }
+      ]);
+      console.log('Seeded results');
     }
 
     app.listen(PORT, () => {

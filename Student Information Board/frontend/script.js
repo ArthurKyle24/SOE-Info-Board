@@ -19,19 +19,12 @@ function initializeApp() {
     const savedUser = localStorage.getItem('currentUser');
     
     if (savedToken && savedUser) {
+        // Restore token and user, then verify token with the backend before showing pages
         authToken = savedToken;
         currentUser = JSON.parse(savedUser);
-        
-        // Update displayed username and show appropriate page
-        if (currentUser.userType === 'admin') {
-            document.querySelector('#adminPage .user-info span').textContent = `Admin: ${currentUser.username}`;
-            showPage('adminPage');
-            loadAdminContent();
-        } else {
-            document.querySelector('#studentPage .user-info span').textContent = `Student: ${currentUser.username}`;
-            showPage('studentPage');
-            loadStudentContent();
-        }
+
+        // Verify token (this will show the appropriate page on success or clear it on failure)
+        verifyToken();
     } else {
         // No saved login, show login page
         showPage('loginPage');
@@ -530,7 +523,8 @@ async function performSearch() {
     const dateFilter = document.getElementById('dateFilter').value;
     
     const params = new URLSearchParams();
-    if (searchTerm) params.append('q', searchTerm);
+    // Backend search expects the `query` parameter name
+    if (searchTerm) params.append('query', searchTerm);
     if (categoryFilter) params.append('category', categoryFilter);
     if (dateFilter) params.append('dateFilter', dateFilter);
     
@@ -796,7 +790,8 @@ async function loadArchive() {
     }
     
     try {
-        const response = await fetch(`${BACKEND_URL}/api/${apiType}`, {
+        // Archive endpoint is `/api/archives`
+        const response = await fetch(`${BACKEND_URL}/api/archives`, {
             headers: {
                 'Authorization': `Bearer ${authToken}`
             }
