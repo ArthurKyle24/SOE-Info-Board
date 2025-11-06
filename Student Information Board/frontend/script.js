@@ -1,4 +1,4 @@
-const BACKEND_URL = "https://soe-info-board-api.onrender.com"; 
+const BACKEND_URL = "http://localhost:3000"; 
 
 // Global Variables
 let currentUser = null;
@@ -14,14 +14,28 @@ function initializeApp() {
     // Set up event listeners
     setupEventListeners();
     
-    // Clear any existing tokens to start fresh
-    localStorage.removeItem('authToken');
-    localStorage.removeItem('currentUser');
-    authToken = null;
-    currentUser = null;
+    // Check if user is already logged in
+    const savedToken = localStorage.getItem('authToken');
+    const savedUser = localStorage.getItem('currentUser');
     
-    // Show login page by default
-    showPage('loginPage');
+    if (savedToken && savedUser) {
+        authToken = savedToken;
+        currentUser = JSON.parse(savedUser);
+        
+        // Update displayed username and show appropriate page
+        if (currentUser.userType === 'admin') {
+            document.querySelector('#adminPage .user-info span').textContent = `Admin: ${currentUser.username}`;
+            showPage('adminPage');
+            loadAdminContent();
+        } else {
+            document.querySelector('#studentPage .user-info span').textContent = `Student: ${currentUser.username}`;
+            showPage('studentPage');
+            loadStudentContent();
+        }
+    } else {
+        // No saved login, show login page
+        showPage('loginPage');
+    }
 }
 
 function setupEventListeners() {
@@ -149,6 +163,7 @@ async function handleLogin(e) {
     document.getElementById('loginError').textContent = '';
     
     try {
+        console.log('Sending login request:', { ...credentials, userType }); // Debug log
         const response = await fetch(`${BACKEND_URL}/api/login`, {
              method: 'POST',
              headers: {
@@ -160,6 +175,7 @@ async function handleLogin(e) {
         let data;
         try {
             data = await response.json();
+            console.log('Login response:', data); // Debug log
         } catch {
             const text = await response.text();
             throw new Error(text);
@@ -167,14 +183,21 @@ async function handleLogin(e) {
         
         if (response.ok) {
             authToken = data.token;
-            currentUser = data.user;
+            currentUser = data.user; // Use the user object from the response
             localStorage.setItem('authToken', authToken);
             localStorage.setItem('currentUser', JSON.stringify(currentUser));
             
+            console.log('Current user type:', currentUser.userType); // Debug log
+            
+            // Update displayed username and show appropriate page
             if (currentUser.userType === 'admin') {
+                console.log('Showing admin page'); // Debug log
+                document.querySelector('#adminPage .user-info span').textContent = `Admin: ${currentUser.username}`;
                 showPage('adminPage');
                 loadAdminContent();
             } else {
+                console.log('Showing student page'); // Debug log
+                document.querySelector('#studentPage .user-info span').textContent = `Student: ${currentUser.username}`;
                 showPage('studentPage');
                 loadStudentContent();
             }
@@ -253,10 +276,22 @@ async function verifyToken() {
 }
 
 function showPage(pageId) {
+    console.log('Switching to page:', pageId); // Debug log
+    
+    // Hide all pages
     document.querySelectorAll('.page').forEach(page => {
         page.classList.remove('active');
+        console.log('Removing active class from:', page.id);
     });
-    document.getElementById(pageId).classList.add('active');
+    
+    // Show requested page
+    const page = document.getElementById(pageId);
+    if (page) {
+        page.classList.add('active');
+        console.log('Added active class to:', pageId);
+    } else {
+        console.error('Page not found:', pageId);
+    }
 }
 
 function switchTab(tabName) {
@@ -292,10 +327,18 @@ function switchTab(tabName) {
 }
 
 async function loadStudentContent() {
-    await loadContent('announcements', 'announcements');
-    await loadContent('events', 'events');
-    await loadContent('timetable', 'timetable');
-    await loadContent('results', 'results');
+    console.log('Loading student content...'); // Debug log
+    try {
+        await Promise.all([
+            loadContent('announcements', 'announcements'),
+            loadContent('events', 'events'),
+            loadContent('timetable', 'timetable'),
+            loadContent('results', 'results')
+        ]);
+        console.log('All student content loaded successfully');
+    } catch (error) {
+        console.error('Error loading student content:', error);
+    }
 }
 
 async function loadAdminContent() {
@@ -308,7 +351,10 @@ async function loadAdminContent() {
 
 async function loadContent(containerId, apiType) {
     const container = document.getElementById(containerId);
-    if (!container) return;
+    if (!container) {
+        console.error(`Container ${containerId} not found`);
+        return;
+    }
     
     // Only load content if user is authenticated
     if (!authToken) {
@@ -317,43 +363,41 @@ async function loadContent(containerId, apiType) {
     }
     
     try {
+        console.log(`Loading ${apiType} content with token:`, authToken); // Debug log
         const response = await fetch(`${BACKEND_URL}/api/${apiType}`, {
             headers: {
-                'Authorization': `Bearer ${authToken}`
+                'Authorization': `Bearer ${authToken}`,
+                'Content-Type': 'application/json'
             }
-        }).catch(err => console.error(err));
+        });
         
-        if (response.ok) {
-            const data = await response.json();
-            
-            if (data.length === 0) {
-                container.innerHTML = `
-                    <div class="empty-state">
-                        <i class="fas fa-inbox"></i>
-                        <h3>No content available</h3>
-                        <p>Check back later for updates.</p>
-                    </div>
-                `;
-                return;
-            }
-            
-            container.innerHTML = data.map(item => createContentItem(item)).join('');
-        } else {
+        const data = await response.json();
+        
+        if (!response.ok) {
+            throw new Error(data.error || `HTTP error! status: ${response.status}`);
+        }
+        
+        console.log(`Received ${apiType} data:`, data); // Debug log
+        
+        if (data.length === 0) {
             container.innerHTML = `
                 <div class="empty-state">
-                    <i class="fas fa-exclamation-triangle"></i>
-                    <h3>Error loading content</h3>
-                    <p>Please try again later.</p>
+                    <i class="fas fa-inbox"></i>
+                    <h3>No content available</h3>
+                    <p>Check back later for updates.</p>
                 </div>
             `;
+            return;
         }
+        
+        container.innerHTML = data.map(item => createContentItem(item)).join('');
     } catch (error) {
-        console.error('Error loading content:', error);
+        console.error(`Error loading ${apiType}:`, error);
         container.innerHTML = `
             <div class="empty-state">
                 <i class="fas fa-exclamation-triangle"></i>
-                <h3>Network error</h3>
-                <p>Please check your connection and try again.</p>
+                <h3>Error loading content</h3>
+                <p>Error: ${error.message}</p>
             </div>
         `;
     }
