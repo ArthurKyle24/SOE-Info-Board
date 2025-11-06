@@ -48,7 +48,7 @@ process.on('SIGINT', () => {
     process.exit(0);
 });
 
-// MongoDB connection and models (only one require for mongoose)
+
 app.get('/', (req, res) => {
   res.send('Backend is live and running! 🚀');
 });

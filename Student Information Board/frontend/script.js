@@ -1,4 +1,11 @@
-const BACKEND_URL = "http://localhost:3000"; 
+// Allow the deployed site to set the backend URL at runtime by defining
+// `window.BACKEND_URL` in `index.html` (see example there). Fall back to
+// localhost for local development.
+const BACKEND_URL = window.BACKEND_URL || (location.hostname === 'localhost' ? 'http://localhost:3000' : undefined);
+
+if (!BACKEND_URL) {
+    console.warn('No BACKEND_URL configured. If this is a deployed site, set window.BACKEND_URL in your HTML to your backend API base URL (e.g. https://my-api.onrender.com).');
+}
 
 // Global Variables
 let currentUser = null;
