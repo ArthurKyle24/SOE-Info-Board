@@ -850,7 +850,7 @@ async function initializeDatabase() {
           description: 'Join us for a comprehensive workshop series on Software Design Patterns. Sessions will cover Creational, Structural, and Behavioral patterns with practical examples.',
           category: 'academic',
           date: new Date('2025-11-08'),
-          author: 'Dr. Anderson',
+          author: 'Dr. Aguwa',
           priority: 'normal'
         },
         {
@@ -858,7 +858,7 @@ async function initializeDatabase() {
           description: 'Final deadline for submitting research papers for the International Conference on Software Engineering (ICSE 2026) is December 15, 2025.',
           category: 'academic',
           date: new Date('2025-12-15'),
-          author: 'Prof. Williams',
+          author: 'Dr. Caesar',
           priority: 'high'
         },
         {
@@ -882,7 +882,7 @@ async function initializeDatabase() {
           description: 'Annual software project showcase event. Students will present their innovative solutions to industry professionals.',
           category: 'events',
           date: new Date('2025-12-10'),
-          author: 'Prof. Martinez',
+          author: 'Dr. Elei',
           priority: 'high'
         },
         {
@@ -906,7 +906,7 @@ async function initializeDatabase() {
           description: 'New elective course on Blockchain Development will be offered next semester. Pre-registration starts December 1.',
           category: 'academic',
           date: new Date('2025-12-01'),
-          author: 'Dr. Kumar',
+          author: 'Engr. Erike',
           priority: 'normal'
         },
         {
@@ -947,7 +947,7 @@ async function initializeDatabase() {
           category: 'events',
           date: new Date('2025-11-12'),
           time: '15:30',
-          location: 'Main Auditorium',
+          location: 'SMAT Auditorium',
           author: 'Admin',
           priority: 'normal'
         },
@@ -978,7 +978,7 @@ async function initializeDatabase() {
           date: new Date('2025-11-18'),
           time: '13:00',
           location: 'Lab 204',
-          author: 'Dr. Thompson',
+          author: 'Dr. Elei',
           priority: 'normal'
         },
         {
@@ -987,7 +987,7 @@ async function initializeDatabase() {
           category: 'events',
           date: new Date('2025-11-30'),
           time: '18:00',
-          location: 'Faculty Lounge',
+          location: 'Faculty building',
           author: 'Alumni Association',
           priority: 'normal'
         },
@@ -1018,7 +1018,7 @@ async function initializeDatabase() {
           date: new Date('2025-11-28'),
           time: '11:00',
           location: 'Room 405',
-          author: 'Prof. Clark',
+          author: 'Dr. Caesar',
           priority: 'normal'
         },
         {
@@ -1048,7 +1048,7 @@ async function initializeDatabase() {
           date: new Date('2025-12-18'),
           time: '17:00',
           location: 'Student Center',
-          author: 'Student Council',
+          author: 'SOE Executives',
           priority: 'normal'
         }
       ]);
@@ -1231,3 +1231,4 @@ async function initializeDatabase() {
 
 // Start init after everything is defined
 initializeDatabase();
+
